@@ -1,10 +1,12 @@
 using DSW_3P_PR02.Models;
 using DSW_3P_PR02.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DSW_3P_PR02.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/personajes")]
 public sealed class PersonajesController(IPersonajeService personajeService) : ControllerBase
 {
