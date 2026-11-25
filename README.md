@@ -17,6 +17,12 @@ dotnet run --project .\DSW_3P_PR02.csproj --launch-profile http
 
 La URL HTTP de desarrollo configurada es `http://localhost:5033`.
 
+## CORS y Swagger
+
+Los orígenes permitidos se configuran en `Cors:AllowedOrigins` dentro de `appsettings.json`; para la entrega, agrega o reemplaza ahí el origen del cliente docente. La política solo permite `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS` y los encabezados `Content-Type` y `Authorization`.
+
+Swagger UI está disponible en `http://localhost:5033/swagger` al ejecutar el perfil `http`. Usa **Authorize** y pega el JWT para probar los endpoints protegidos. La URL base fija también está configurada en `Properties/launchSettings.json`.
+
 ## SQL Server y User Secrets
 
 En desarrollo, `appsettings.Development.json` contiene solo una referencia local a `.\SQLEXPRESS`; no contiene credenciales. Configura la cadena completa de autenticación SQL en User Secrets bajo `ConnectionStrings:DefaultConnection`. La configuración de User Secrets reemplaza la referencia del archivo durante el entorno `Development`.
