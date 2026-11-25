@@ -1,6 +1,86 @@
-@DSW_3P_PR02_HostAddress = http://localhost:5033
+@baseUrl = http://localhost:5033
+@personajeId = {{crearPersonaje.response.body.$.id}}
 
-GET {{DSW_3P_PR02_HostAddress}}/weatherforecast/
+### Obtener todos
+GET {{baseUrl}}/api/personajes
 Accept: application/json
 
-###
+### Obtener por ID
+GET {{baseUrl}}/api/personajes/{{personajeId}}
+Accept: application/json
+
+### Obtener por videojuego (sin distinguir mayúsculas)
+GET {{baseUrl}}/api/personajes/videojuego/tomb%20raider
+Accept: application/json
+
+### Obtener nivel igual o superior
+GET {{baseUrl}}/api/personajes/nivel/90
+Accept: application/json
+
+### Crear (el servidor asigna el Id y fuerza Disponible=true)
+# @name crearPersonaje
+POST {{baseUrl}}/api/personajes
+Content-Type: application/json
+
+{
+  "id": 999,
+  "nombre": "Aloy",
+  "videojuego": "Horizon Forbidden West",
+  "clase": "Cazadora",
+  "nivel": 80,
+  "poder": 87,
+  "disponible": false,
+  "imagenUrl": "https://example.com/imagenes/aloy.jpg"
+}
+
+### Actualizar el personaje creado
+PUT {{baseUrl}}/api/personajes/{{personajeId}}
+Content-Type: application/json
+
+{
+  "id": {{personajeId}},
+  "nombre": "Aloy",
+  "videojuego": "Horizon Forbidden West",
+  "clase": "Cazadora",
+  "nivel": 81,
+  "poder": 88,
+  "disponible": true,
+  "imagenUrl": "https://example.com/imagenes/aloy.jpg"
+}
+
+### Error: el Id de ruta no coincide con el cuerpo
+PUT {{baseUrl}}/api/personajes/{{personajeId}}
+Content-Type: application/json
+
+{
+  "id": 999999,
+  "nombre": "Aloy",
+  "videojuego": "Horizon Forbidden West",
+  "clase": "Cazadora",
+  "nivel": 80,
+  "poder": 87,
+  "disponible": true
+}
+
+### Error: validación automática (400)
+POST {{baseUrl}}/api/personajes
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "videojuego": "Horizon",
+  "clase": "Cazadora",
+  "nivel": 101,
+  "poder": 0,
+  "imagenUrl": "ftp://example.com/aloy.jpg"
+}
+
+### Error: personaje inexistente (404)
+GET {{baseUrl}}/api/personajes/999999
+Accept: application/json
+
+### Eliminar el personaje creado
+DELETE {{baseUrl}}/api/personajes/{{personajeId}}
+
+### Error: eliminar personaje inexistente (404)
+DELETE {{baseUrl}}/api/personajes/999999

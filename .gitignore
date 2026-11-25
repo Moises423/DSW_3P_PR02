@@ -1,0 +1,14 @@
+# Compilacion y salida
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Configuracion local
+appsettings.*.local.json
+
+# Datos JSON generados localmente
+Data/*.json
